@@ -1,4 +1,4 @@
-package com.example.ffddf
+package com.example.tmdb
 
 import io.flutter.embedding.android.FlutterActivity
 
