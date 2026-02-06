@@ -6,11 +6,11 @@ part 'film.g.dart';
 class Film {
   final int id;
   final String title;
-  
+
   @JsonKey(name: 'poster_path')
   final String? posterPath;
 
-  @JsonKey(name: 'vote_average')
+  @JsonKey(name: 'vote_average', fromJson: _toDouble)
   final double voteAverage;
 
   @JsonKey(name: 'release_date')
@@ -27,7 +27,7 @@ class Film {
     required this.voteAverage,
     this.releaseDate,
     this.overview,
-    required this.originalLanguage
+    required this.originalLanguage,
   });
 
   factory Film.fromJson(Map<String, dynamic> json) => _$FilmFromJson(json);
@@ -36,4 +36,6 @@ class Film {
   String getFullPosterPath() {
     return 'https://image.tmdb.org/t/p/w500$posterPath';
   }
+
+  static double _toDouble(dynamic value) => (value as num).toDouble();
 }

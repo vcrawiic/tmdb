@@ -12,13 +12,19 @@ class ApiService {
 
   Future<List<Film>> getPopularFilms({int page = 1}) async {
     try {
+      print('🎬 Загружаем фильмы, страница: $page');
       final response = await _dio.get(
-        'movie/popular',
+        '/movie/popular',
         queryParameters: {'page': page},
       );
+      print('✅ Ответ получен, статус: ${response.statusCode}');
       final List<dynamic> results = response.data['results'];
-      return results.map((json) => Film.fromJson(json)).toList();
+      print('📦 Фильмов в ответе: ${results.length}');
+      final films = results.map((json) => Film.fromJson(json)).toList();
+      print('✅ Парсинг успешен');
+      return films;
     } catch (e) {
+      print('❌ Ошибка: $e');
       throw Exception('Ошибка загрузки фильмов: $e');
     }
   }
@@ -27,7 +33,7 @@ class ApiService {
     try {
       final response = await _dio.get(
         'search/movie',
-        queryParameters: {query: query, 'page': page},
+        queryParameters: {'query': query, 'page': page},
       );
       final List<dynamic> results = response.data['results'];
 
